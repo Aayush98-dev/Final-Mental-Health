@@ -1,0 +1,128 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "EmotionLog": {
+      "title": "Emotion Log",
+      "description": "Historical record of detected emotions and wellness metrics",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "emotion": { "type": "string", "enum": ["Happy", "Sad", "Angry", "Stress", "Neutral"] },
+        "wellnessScore": { "type": "number", "minimum": 0, "maximum": 100 },
+        "insight": { "type": "string" },
+        "educationalInsight": { "type": "string" },
+        "textInput": { "type": "string" },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "critical": { "type": "boolean" },
+        "inputType": { "type": "string", "enum": ["facial", "voice", "text", "multimodal"] }
+      },
+      "required": ["userId", "emotion", "wellnessScore", "timestamp"]
+    },
+    "SavedResource": {
+      "title": "Saved Resource",
+      "description": "Educational or therapeutic resources saved by the user",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "resourceId": { "type": "string" },
+        "title": { "type": "string" },
+        "summary": { "type": "string" },
+        "type": { "type": "string", "enum": ["video", "article", "guide", "activity"] },
+        "url": { "type": "string" },
+        "savedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "title", "savedAt"]
+    },
+    "ActivityLog": {
+      "title": "Activity Log",
+      "description": "Log of AI generated activities for a specific emotion",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "emotion": { "type": "string" },
+        "activities": {
+          "type": "array",
+          "items": { "type": "object" }
+        },
+        "timestamp": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "emotion", "timestamp"]
+    },
+    "Appointment": {
+      "title": "Appointment",
+      "description": "Booked session with a therapist",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "therapistId": { "type": "string" },
+        "therapistName": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "status": { "type": "string", "enum": ["pending", "confirmed", "completed", "cancelled"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "therapistId", "date", "status"]
+    },
+    "Therapist": {
+      "title": "Therapist",
+      "description": "Provider information",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "specialty": { "type": "string" },
+        "rating": { "type": "number" },
+        "location": { "type": "string" },
+        "coordinates": {
+          "type": "object",
+          "properties": {
+            "lat": { "type": "number" },
+            "lng": { "type": "number" }
+          }
+        }
+      }
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Root user profiles"
+    },
+    "/emotionLogs/{logId}": {
+      "schema": "EmotionLog",
+      "description": "Global emotion log collection secured by userId"
+    },
+    "/savedResources/{resourceId}": {
+      "schema": "SavedResource",
+      "description": "Resources saved by users"
+    },
+    "/appointments/{appointmentId}": {
+      "schema": "Appointment",
+      "description": "Therapist appointments"
+    },
+    "/activityLogs/{logId}": {
+      "schema": "ActivityLog",
+      "description": "Logs of generated activities"
+    },
+    "/therapists/{therapistId}": {
+      "schema": "Therapist",
+      "description": "Public directory of therapists"
+    },
+    "/test/{docId}": {
+      "schema": "object",
+      "description": "System connection testing"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "name": "Serenity AI",
+  "description": "A high-fidelity neural wellness hub that leverages multi-modal biometric sensors and empathetic AI to synchronize mental resonance via adaptive protocols.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone"
+  ],
+  "majorCapabilities": []
+}
