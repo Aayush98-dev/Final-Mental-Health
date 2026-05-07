@@ -8,7 +8,7 @@ import { fileURLToPath } from 'url';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-  // --- MongoDB Schemas ---
+  // ******** MongoDB Schemas ---
 const detectionSchema = new mongoose.Schema({
   userId: String,
   result: {
@@ -64,7 +64,8 @@ async function startServer() {
 
   app.use(express.json());
 
-  // Connect to MongoDB Atlas
+  // ******** Connect to MongoDB Atlas
+
   const MONGODB_URI = process.env.MONGODB_URI;
   const isPlaceholder = MONGODB_URI?.includes('<username>') || MONGODB_URI?.includes('<password>');
 
@@ -83,9 +84,10 @@ async function startServer() {
     console.warn(`MONGODB_URI ${reason}. Database sync features will be disabled until valid credentials are provided.`);
   }
 
-  // --- API Routes ---
+  // ********** API Routes 
 
-  // Log Login History
+  // Log Login History************
+
   app.post('/api/auth/login-history', async (req, res) => {
     try {
       const history = new LoginHistory(req.body);
@@ -96,7 +98,8 @@ async function startServer() {
     }
   });
 
-  // Save User Profile
+  // Save User Profile**********
+
   app.post('/api/user/profile', async (req, res) => {
     try {
       const { userId, displayName, email, photoURL } = req.body;
@@ -111,7 +114,8 @@ async function startServer() {
     }
   });
 
-  // Save Detection Result
+  // Save Detection Result*************
+
   app.post('/api/history/detection', async (req, res) => {
     try {
       const detection = new Detection(req.body);
@@ -122,7 +126,8 @@ async function startServer() {
     }
   });
 
-  // Get Detection History
+  // Get Detection History ***********
+
   app.get('/api/history/detection/:userId', async (req, res) => {
     try {
       const history = await Detection.find({ userId: req.params.userId })
@@ -134,7 +139,8 @@ async function startServer() {
     }
   });
 
-  // Log Contact Request
+  // Log Contact Request*************
+
   app.post('/api/contacts/request', async (req, res) => {
     try {
       const request = new ContactRequest(req.body);
@@ -145,7 +151,8 @@ async function startServer() {
     }
   });
   
-  // Log Appointment
+  // Log Appointment********
+
   app.post('/api/appointments', async (req, res) => {
     try {
       const appointment = new Appointment(req.body);
@@ -156,7 +163,8 @@ async function startServer() {
     }
   });
 
-  // Vite Integration
+  // Vite Integration*************
+  
   if (process.env.NODE_ENV !== 'production') {
     const vite = await createViteServer({
       server: { middlewareMode: true },

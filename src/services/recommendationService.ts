@@ -38,6 +38,7 @@ function normalizeEmotion(emotion?: string): string {
   const normalized = emotion.toLowerCase();
   
   // Direct mapping check first
+  
   if (normalized.includes('happy') || normalized.includes('joy') || normalized.includes('glad')) return 'Happy';
   if (normalized.includes('sad') || normalized.includes('grief') || normalized.includes('unhappy')) return 'Sad';
   if (normalized.includes('angr') || normalized.includes('frustrat') || normalized.includes('irrit')) return 'Angry';
@@ -59,7 +60,8 @@ export async function analyzeMentalState(params: AnalyzeParams): Promise<Wellnes
   const { facialImage, voiceAudio, textInput, history = [] } = params;
   const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
   
-  // Speed Optimization: Start fetching resources in parallel
+  // Speed Optimization: Start fetching resources in parallel  ***************************************
+
   const preliminaryEmotion = normalizeEmotion(textInput);
   const resourcesPromise = fetchResources({ 
     emotion: preliminaryEmotion, 
@@ -148,7 +150,8 @@ export async function analyzeMentalState(params: AnalyzeParams): Promise<Wellnes
     
     const data = JSON.parse(text);
     
-    // Performance: Refresh resources based on final detected emotion
+    // Performance: Refresh resources based on final detected emotion *************
+
     const detectedEmotion = normalizeEmotion(data.detectedEmotion);
     let finalResources: Recommendation[];
     
@@ -186,7 +189,8 @@ export async function analyzeMentalState(params: AnalyzeParams): Promise<Wellnes
       });
     });
     
-    // Sort final result to have AI advice first, then videos/articles
+    // Sort final result to have AI advice first, then videos/articles *****************
+
     return {
       score: data.score,
       insight: data.insight,
@@ -226,7 +230,9 @@ export async function fetchResources(params: { emotion: string; maxVideos?: numb
       console.warn("YouTube fetch timed out after 10s");
     }, 10000);
     try {
-      // Pick a specific search term from the base for better results
+      
+      // Pick a specific search term from the base for better results **********************
+
       const searchTerms = queryBase.split(',').map(s => s.trim());
       const selectedQuery = searchTerms[Math.floor(Math.random() * searchTerms.length)];
       const query = encodeURIComponent(`mental health ${selectedQuery}`);

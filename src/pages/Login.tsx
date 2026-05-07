@@ -77,7 +77,7 @@ export default function Login() {
           </h1>
           <div className="flex items-center gap-3 mt-4">
              <span className="w-8 h-[1px] bg-slate-800" />
-             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">Neural Bridge Active</p>
+             <p className="text-[10px] font-black text-slate-500 uppercase tracking-[0.4em]">Login</p>
              <span className="w-8 h-[1px] bg-slate-800" />
           </div>
         </div>
@@ -95,7 +95,7 @@ export default function Login() {
 
         <form onSubmit={handleAuth} className="space-y-6">
           <div className="space-y-3">
-            <label className="text-[10px] font-black text-brand-teal uppercase tracking-[0.3em] ml-2">Secure Identifier</label>
+            <label className="text-[10px] font-black text-brand-teal uppercase tracking-[0.3em] ml-2">UserName</label>
             <input 
               type="email" 
               required
@@ -121,7 +121,7 @@ export default function Login() {
             className="w-full bg-white text-brand-dark px-6 py-5 rounded-2xl font-black uppercase tracking-[0.3em] text-xs shadow-2xl hover:bg-brand-accent hover:text-white transition-all active:scale-95 flex items-center justify-center gap-3 group"
           >
             {isLogin ? <LogIn className="w-5 h-5 group-hover:translate-x-1 transition-transform" /> : <UserPlus className="w-5 h-5 group-hover:scale-110 transition-transform" />}
-            {isLogin ? 'Establish Link' : 'Initialize Node'}
+            {isLogin ? 'Login' : 'SignUp'}
           </button>
         </form>
 

@@ -1,6 +1,5 @@
-/**
- * Service to sync application data with the MongoDB Atlas backend.
- */
+// ******** Service to sync application data with the MongoDB Atlas backend.
+ 
 
 export async function syncProfile(data: { userId: string, displayName: string, email: string, photoURL: string }) {
   try {
