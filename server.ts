@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import express from 'express';
 import { createServer as createViteServer } from 'vite';
 import mongoose from 'mongoose';
@@ -68,7 +69,7 @@ async function startServer() {
   const isPlaceholder = MONGODB_URI?.includes('<username>') || MONGODB_URI?.includes('<password>');
 
   if (MONGODB_URI && !isPlaceholder) {
-    mongoose.connect(MONGODB_URI)
+    await mongoose.connect(MONGODB_URI)
       .then(() => console.log('Connected to MongoDB Atlas'))
       .catch(err => {
         if (err.message.includes('authentication failed')) {
